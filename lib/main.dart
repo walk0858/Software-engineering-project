@@ -1,6 +1,15 @@
+import 'package:fantastic_five_name_game/Utils/constants.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  Firebase.initializeApp(
+      options: FirebaseOptions(
+          apiKey: firebaseAPIkey,
+          appId: firebaseID,
+          messagingSenderId: firebaseProjectNum,
+          projectId: firebaseProjectID)
+  );
   runApp(const MyApp());
 }
 
@@ -24,7 +33,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Name Game Sign in page'),
     );
   }
 }
@@ -48,18 +57,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -95,21 +95,107 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+            Padding(
+              //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
+              padding: EdgeInsets.symmetric(horizontal: 15),
+
+              child: TextField(
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Email address',
+                    hintText: 'Enter valid email id as abc@gmail.com'),
+                keyboardType: TextInputType.emailAddress,
+                onChanged: (text){
+                  userName =text;
+                },
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+            Padding(
+              //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+
+              child: TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'password',
+                    hintText: 'Enter your password'),
+                keyboardType: TextInputType.emailAddress,
+                onChanged: (text){
+                  password =text;
+                },
+              ),
             ),
+
+            Container(
+              height: 50,
+              width: 250,
+              decoration: BoxDecoration(
+                  color: Colors.indigo, borderRadius: BorderRadius.circular(20)),
+              child: TextButton(
+                onPressed: () async {
+
+                },
+                child: Text(
+                  'Login',
+                  style: TextStyle(color: Colors.white, fontSize: 25),
+                ),
+              ),
+
+            ),
+
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 30,horizontal: 15),
+            ),
+
+            Container(
+              height: 50,
+              width: 250,
+              decoration: BoxDecoration(
+                  color: Colors.indigo, borderRadius: BorderRadius.circular(20)),
+              child: TextButton(
+                onPressed: () async {
+
+                },
+                child: Text(
+                  'Create New Account',
+                  style: TextStyle(color: Colors.white, fontSize: 25),
+                ),
+              ),
+
+            ),
+
+            Padding(
+              padding : EdgeInsets.symmetric(vertical: 15, horizontal: 15)
+            ),
+
+
+            Container(
+              height: 50,
+              width: 250,
+              decoration: BoxDecoration(
+                  color: Colors.indigo, borderRadius: BorderRadius.circular(20)),
+              child: TextButton(
+                onPressed: () async {
+
+                },
+                child: Text(
+                  'Continue as guest',
+                  style: TextStyle(color: Colors.white, fontSize: 25),
+                ),
+              ),
+
+            ),
+
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+
     );
   }
 }
+
+
+String userName = '';
+String password ='';
+String errorMessage = '';
