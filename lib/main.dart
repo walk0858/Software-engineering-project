@@ -1,15 +1,21 @@
 import 'package:fantastic_five_name_game/Utils/constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  Firebase.initializeApp(
-      options: FirebaseOptions(
+  WidgetsFlutterBinding.ensureInitialized();
+  if (Firebase.apps.length == 0)
+    {Firebase.initializeApp(
+      options: const FirebaseOptions(
           apiKey: firebaseAPIkey,
           appId: firebaseID,
           messagingSenderId: firebaseProjectNum,
           projectId: firebaseProjectID)
-  );
+  );}
+  else{
+    Firebase.app();
+  }
   runApp(const MyApp());
 }
 
@@ -58,7 +64,15 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  String userName = '';
+  String password ='';
+  String errorMessage = '';
 
+  void setErrorMessage(String message){
+    setState(() {
+      errorMessage = message;
+    });
+  }
 
 
   @override
@@ -97,10 +111,10 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Padding(
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
 
               child: TextField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email address',
                     hintText: 'Enter valid email id as abc@gmail.com'),
@@ -112,11 +126,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Padding(
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
 
               child: TextField(
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'password',
                     hintText: 'Enter your password'),
@@ -134,9 +148,32 @@ class _MyHomePageState extends State<MyHomePage> {
                   color: Colors.indigo, borderRadius: BorderRadius.circular(20)),
               child: TextButton(
                 onPressed: () async {
+                  bool success = false;
 
-                },
-                child: Text(
+                  if(userName == '' || password==''){
+                    setErrorMessage('Must enter user name and password');
+                  }
+                  else {
+                    try {
+                       await FirebaseAuth.instance.signInWithEmailAndPassword(
+                          email: userName, password: password);
+                      success = true;
+                    }
+                    on FirebaseAuthException catch (e) {
+                      if (e.code == 'user-not-found') {
+                        setErrorMessage('Email not found');
+                      }
+                      if (e.code == 'wrong-password') {
+                        setErrorMessage('Password is incorrect');
+                      }
+                    }
+                  }
+
+                  if(success){
+                    setErrorMessage('Login Successful');
+                  }
+                  },
+                child: const Text(
                   'Login',
                   style: TextStyle(color: Colors.white, fontSize: 25),
                 ),
@@ -144,8 +181,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
             ),
 
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 30,horizontal: 15),
+            Text(
+              errorMessage,
+              style: const TextStyle(color: Colors.red, fontSize: 16),
+            ),
+
+            const Padding(
+                padding: EdgeInsets.symmetric(vertical: 10)
             ),
 
             Container(
@@ -157,7 +199,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () async {
 
                 },
-                child: Text(
+                child: const Text(
                   'Create New Account',
                   style: TextStyle(color: Colors.white, fontSize: 25),
                 ),
@@ -165,7 +207,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
             ),
 
-            Padding(
+            const Padding(
               padding : EdgeInsets.symmetric(vertical: 15, horizontal: 15)
             ),
 
@@ -179,7 +221,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () async {
 
                 },
-                child: Text(
+                child: const Text(
                   'Continue as guest',
                   style: TextStyle(color: Colors.white, fontSize: 25),
                 ),
@@ -196,6 +238,4 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 
-String userName = '';
-String password ='';
-String errorMessage = '';
+
