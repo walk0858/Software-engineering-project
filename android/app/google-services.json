@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "222656522085",
+    "project_id": "cs3541-final-project",
+    "storage_bucket": "cs3541-final-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:222656522085:android:734948d199f1545faea38c",
+        "android_client_info": {
+          "package_name": "com.example.fantastic_five_name_game"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "222656522085-bve1c9q23p36kocha736noe5n6ktapj9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fantastic_five_name_game",
+            "certificate_hash": "d83b31419569044d77e00f7c0d0a18d55309d96f"
+          }
+        },
+        {
+          "client_id": "222656522085-rf0oe9egfrqbou05gbderlu0gj05i6ao.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUSK71acpQE30AHC6qeIAdqpdFcOnr6Ec"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "222656522085-rf0oe9egfrqbou05gbderlu0gj05i6ao.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
