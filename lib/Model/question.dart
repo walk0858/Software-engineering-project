@@ -9,4 +9,19 @@ class Question {
 
   /// The correct answer to the question
   String correct = "Placeholder?";
+
+  /// Returns true if answer is correct, and false if it is incorrect
+  bool checkAnswer(String answer) {
+    return answer == correct;
+  }
+
+  /// Returns question
+  String getQuestion() {
+    return question;
+  }
+
+  /// Return list of answers
+  List<String> getAnswers() {
+    return answers;
+  }
 }
