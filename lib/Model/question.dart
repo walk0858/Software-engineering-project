@@ -1,7 +1,5 @@
 /// Stores a question
-///
-///
-///
+
 class Question {
   /// The question
   String question = "Placeholder?";
