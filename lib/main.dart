@@ -3,6 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
+import 'Views/hub_page.dart';
+import 'Views/newAccount_page.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   if (Firebase.apps.length == 0)
@@ -73,10 +76,14 @@ class _MyHomePageState extends State<MyHomePage> {
       errorMessage = message;
     });
   }
+  void resetErrorMessage(){
+    errorMessage = '';
+  }
 
 
   @override
   Widget build(BuildContext context) {
+    resetErrorMessage();
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -171,6 +178,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
                   if(success){
                     setErrorMessage('Login Successful');
+                    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                      return Hub();
+                    }));
                   }
                   },
                 child: const Text(
@@ -197,7 +207,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   color: Colors.indigo, borderRadius: BorderRadius.circular(20)),
               child: TextButton(
                 onPressed: () async {
-
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>create_account()));
                 },
                 child: const Text(
                   'Create New Account',
@@ -219,7 +229,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   color: Colors.indigo, borderRadius: BorderRadius.circular(20)),
               child: TextButton(
                 onPressed: () async {
-
+                  Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                    return Hub();
+                  }));
                 },
                 child: const Text(
                   'Continue as guest',
