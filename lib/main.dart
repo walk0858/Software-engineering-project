@@ -67,9 +67,9 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  String userName = '';
-  String password ='';
   String errorMessage = '';
+  final userNameController = TextEditingController();
+  final passwordController = TextEditingController();
 
   void setErrorMessage(String message){
     setState(() {
@@ -77,8 +77,16 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
   void resetErrorMessage(){
-    errorMessage = '';
+    setState(() {
+      errorMessage = '';
+    });
+
   }
+  void clearDataFields(){
+
+      userNameController.clear();
+      passwordController.clear();
+    }
 
 
   @override
@@ -126,9 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     labelText: 'Email address',
                     hintText: 'Enter valid email id as abc@gmail.com'),
                 keyboardType: TextInputType.emailAddress,
-                onChanged: (text){
-                  userName =text;
-                },
+                controller: userNameController,
               ),
             ),
             Padding(
@@ -141,10 +147,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     border: OutlineInputBorder(),
                     labelText: 'password',
                     hintText: 'Enter your password'),
-                keyboardType: TextInputType.emailAddress,
-                onChanged: (text){
-                  password =text;
-                },
+                controller: passwordController,
               ),
             ),
 
@@ -157,13 +160,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () async {
                   bool success = false;
 
-                  if(userName == '' || password==''){
+                  if(userNameController.text == '' || passwordController.text==''){
                     setErrorMessage('Must enter user name and password');
                   }
                   else {
                     try {
                        await FirebaseAuth.instance.signInWithEmailAndPassword(
-                          email: userName, password: password);
+                          email: userNameController.text, password: passwordController.text);
                       success = true;
                     }
                     on FirebaseAuthException catch (e) {
@@ -178,6 +181,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                   if(success){
                     setErrorMessage('Login Successful');
+                    clearDataFields();
                     Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
                       return Hub();
                     }));
