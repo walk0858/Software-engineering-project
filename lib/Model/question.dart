@@ -1,14 +1,14 @@
 /// Stores a question
 ///
-/// String question: The question
 ///
-/// List<String> answers: Possible answers for the question
 ///
-/// String correct: The correct answer to the question
 class Question {
+  /// The question
   String question = "Placeholder?";
 
+  /// Lossible answers for the question
   List<String> answers = [];
 
+  /// The correct answer to the question
   String correct = "Placeholder?";
 }
