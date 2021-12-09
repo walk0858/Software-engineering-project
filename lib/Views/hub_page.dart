@@ -1,3 +1,4 @@
+import 'package:fantastic_five_name_game/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +68,7 @@ class _HubState extends State<Hub> {
 
   void Logout(){
     FirebaseAuth.instance.signOut();
-    Navigator.pop(context);
+    Navigator.popUntil(context, ModalRoute.withName('/'));
   }
 
 }
