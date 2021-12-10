@@ -8,68 +8,6 @@ class Quiz extends StatefulWidget {
   _QuizState createState() => _QuizState();
 }
 
-Scaffold buildQuestionPage(QuizPresenter presenter) {
-  String question = presenter.getQuestion();
-  List<String> answers = presenter.getAnswers();
-
-  Scaffold questionScaffold = Scaffold(
-    appBar: AppBar(
-      // display current quiz question
-      title: Text(question),
-      centerTitle: true,
-      backgroundColor: Colors.blueAccent.shade700,
-    ),
-
-    body: Center(
-      child: Column(
-        children: <Widget>[
-
-          ElevatedButton(
-            child: Text(answers[0]),
-            style: ElevatedButton.styleFrom(
-                primary: Colors.redAccent
-            ),
-            onPressed: () {},
-          ),
-
-          ElevatedButton(
-            child: Text(answers[1]),
-            style: ElevatedButton.styleFrom(
-                primary: Colors.blue
-            ),
-            onPressed: () {},
-          ),
-
-          ElevatedButton(
-            child: Text(answers[2]),
-            style: ElevatedButton.styleFrom(
-                primary: Colors.green
-            ),
-            onPressed: () {},
-          ),
-
-          ElevatedButton(
-            child: Text(answers[3]),
-            style: ElevatedButton.styleFrom(
-                primary: Colors.orange
-            ),
-            onPressed: () {},
-          ),
-
-          ElevatedButton(
-            child: Text(answers[4]),
-            style: ElevatedButton.styleFrom(
-                primary: Colors.purpleAccent
-            ),
-            onPressed: () {},
-          ),
-        ],
-      ),
-    ),
-  );
-  return questionScaffold;
-}
-
 class _QuizState extends State<Quiz> {
   // quiz presenter.
   QuizPresenter presenter = QuizPresenter();
@@ -77,12 +15,95 @@ class _QuizState extends State<Quiz> {
   // question page variable
   Scaffold questionWidget = Scaffold();
 
+  void answerButtonCheck(String answer) {
+    bool isCorrect = presenter.checkQuestion(answer);
+    if (presenter.getQuizIndex() < presenter.getQuizLength()-1) {
+      presenter.nextQuestion();
+      setState(() {
+        buildQuestionPage();
+      });
+    }
+  }
+
+  void buildQuestionPage() {
+    String question = presenter.getQuestion();
+    List<String> answers = presenter.getAnswers();
+    setState(() {
+      questionWidget = Scaffold(
+        appBar: AppBar(
+          // display current quiz question
+          title: Text(question),
+          centerTitle: true,
+          backgroundColor: Colors.blueAccent.shade700,
+        ),
+
+        body: Center(
+          child: Column(
+            children: <Widget>[
+
+              ElevatedButton(
+                child: Text(answers[0]),
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.redAccent
+                ),
+                onPressed: () {
+                  answerButtonCheck(answers[0]);
+                  },
+              ),
+
+              ElevatedButton(
+                child: Text(answers[1]),
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.blue
+                ),
+                onPressed: () {
+                  answerButtonCheck(answers[1]);
+                },
+              ),
+
+              ElevatedButton(
+                child: Text(answers[2]),
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.green
+                ),
+                onPressed: () {
+                  answerButtonCheck(answers[2]);
+
+                },
+              ),
+
+              ElevatedButton(
+                child: Text(answers[3]),
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.orange
+                ),
+                onPressed: () {
+                  answerButtonCheck(answers[3]);
+                },
+              ),
+
+              ElevatedButton(
+                child: Text(answers[4]),
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.purpleAccent
+                ),
+                onPressed: () {
+                  answerButtonCheck(answers[4]);
+                },
+              ),
+            ],
+          ),
+        ),
+      );
+    });
+  }
+
   @override
   void initState() {
     super.initState();
 
     // start the quiz
-    questionWidget = buildQuestionPage(presenter);
+    buildQuestionPage();
   }
 
   @override

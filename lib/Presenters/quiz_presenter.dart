@@ -40,6 +40,11 @@ class QuizPresenter {
     return _quiz.questions.length;
   }
 
+  /// Get current quiz question index (indexes from 0).
+  int getQuizIndex() {
+    return _quiz.questionIndex;
+  }
+
   /// Check if the answer to q question is correct. Only call once per question.
   ///
   /// If [answer] is a correct answer, the score will increase by one and true will be returned.
@@ -62,7 +67,7 @@ class QuizPresenter {
     // check if increasing the questionIndex will put it out of bounds
     if (_quiz.questionIndex < _quiz.questions.length - 1) {
       // increae question index by one
-      _quiz.questionIndex += 1;
+      _quiz.questionIndex++;
       // return next question
       return _quiz.questions[_quiz.questionIndex];
     } else {
