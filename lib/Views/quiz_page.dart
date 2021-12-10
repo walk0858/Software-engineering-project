@@ -32,7 +32,7 @@ class _QuizState extends State<Quiz> {
       questionWidget = Scaffold(
         appBar: AppBar(
           // display current quiz question
-          title: Text(question),
+          title: const Text("Quiz"),
           centerTitle: true,
           backgroundColor: Colors.blueAccent.shade700,
         ),
@@ -40,7 +40,9 @@ class _QuizState extends State<Quiz> {
         body: Center(
           child: Column(
             children: <Widget>[
-
+              Text(question,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
               ElevatedButton(
                 child: Text(answers[0]),
                 style: ElevatedButton.styleFrom(
