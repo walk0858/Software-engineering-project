@@ -35,6 +35,10 @@ class QuizPresenter {
     return _quiz.questions[_quiz.questionIndex].answers;
   }
 
+  String getCorrectAnswer() {
+    return _quiz.questions[_quiz.questionIndex].correct;
+  }
+
   /// Return the number of questions in a quiz
   int getQuizLength() {
     return _quiz.questions.length;
@@ -66,7 +70,7 @@ class QuizPresenter {
   Question nextQuestion() {
     // check if increasing the questionIndex will put it out of bounds
     if (_quiz.questionIndex < _quiz.questions.length - 1) {
-      // increae question index by one
+      // increase question index by one
       _quiz.questionIndex++;
       // return next question
       return _quiz.questions[_quiz.questionIndex];
