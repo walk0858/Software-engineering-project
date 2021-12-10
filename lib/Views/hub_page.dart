@@ -1,3 +1,4 @@
+import 'package:fantastic_five_name_game/Views/quiz_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,9 @@ class _HubState extends State<Hub> {
 
                     child: ElevatedButton(
                       child: Text("Start Quiz"),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Quiz()));
+                      },
 
                     ),
                   ),
