@@ -1,4 +1,5 @@
 import 'package:fantastic_five_name_game/Data/User_Model.dart';
+import 'package:fantastic_five_name_game/Utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -95,8 +96,11 @@ class addNewUserState extends State<addNewUser> {
                   color: Colors.red, borderRadius: BorderRadius.circular(20)),
               child: TextButton(
                 onPressed: (){
-                  UserModel(uid, firstNameController.text, lastNameController.text,
+                  UserModel userModel = UserModel(firstNameController.text, lastNameController.text,
                   phoneNumberController.text, 0, 0);
+                  firestore.collection('users').doc(uid).set(userModel.toMap());
+
+
 
 
                   Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {

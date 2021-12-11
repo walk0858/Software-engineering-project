@@ -1,4 +1,4 @@
-import 'package:fantastic_five_name_game/main.dart';
+import 'package:fantastic_five_name_game/Utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,7 @@ class Hub extends StatefulWidget {
 
 class _HubState extends State<Hub> {
 
-  User? user = FirebaseAuth.instance.currentUser;
+  User? user = firebaseAuth.currentUser;
   bool signedIn = false;
 
   @override
@@ -67,7 +67,7 @@ class _HubState extends State<Hub> {
   }
 
   void Logout(){
-    FirebaseAuth.instance.signOut();
+    firebaseAuth.signOut();
     Navigator.popUntil(context, ModalRoute.withName('/'));
   }
 
