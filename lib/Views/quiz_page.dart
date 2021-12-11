@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -35,19 +33,27 @@ class _QuizState extends State<Quiz> {
       });
     }
 
+    setState(() {
+      updateMessage(message);
+    });
+
     // wait for 1 second to allow user to see if they got the question right
-    Future.delayed(const Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 4), () {
       if (presenter.getQuizIndex() < presenter.getQuizLength()-1) {
         presenter.nextQuestion();
         setState(() {
-          buildQuestionPage();
+          updateQuestionPage(presenter.getQuestion());
+        });
+      } else {
+        setState(() {
+          displayResults();
         });
       }
     });
   }
 
-  void buildQuestionPage() {
-    message = presenter.getQuestion();
+  /// Updates the question page for a new question
+  void updateQuestionPage(String message) {
     List<String> answers = presenter.getAnswers();
 
     setState(() {
@@ -72,7 +78,7 @@ class _QuizState extends State<Quiz> {
                 ),
                 onPressed: () {
                     answerButtonCheck(answers[0]);
-                  },
+                    },
               ),
 
               ElevatedButton(
@@ -122,12 +128,104 @@ class _QuizState extends State<Quiz> {
     });
   }
 
+  /// Updates the message and deactivates the buttons
+  void updateMessage(String message) {
+    List<String> answers = presenter.getAnswers();
+
+    setState(() {
+      questionWidget = Scaffold(
+        appBar: AppBar(
+          title: const Text("Quiz"),
+          centerTitle: true,
+          backgroundColor: Colors.blueAccent.shade700,
+        ),
+
+        body: Center(
+          child: Column(
+            children: <Widget>[
+              Text(message,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              // display current quiz question
+              ElevatedButton(
+                child: Text(answers[0]),
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.redAccent
+                ),
+                onPressed: null
+              ),
+
+              ElevatedButton(
+                child: Text(answers[1]),
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.blue
+                ),
+                onPressed: null
+              ),
+
+              ElevatedButton(
+                child: Text(answers[2]),
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.green
+                ),
+                onPressed: null
+              ),
+
+              ElevatedButton(
+                child: Text(answers[3]),
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.orange
+                ),
+                onPressed: null
+              ),
+
+              ElevatedButton(
+                child: Text(answers[4]),
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.purpleAccent
+                ),
+                onPressed: null
+              ),
+            ],
+          ),
+        ),
+      );
+    });
+  }
+
+  /// Displays the results screen, and how many questions the user got right
+  void displayResults() {
+    // Set message to display the score out of 10.
+    int score = presenter.getScore();
+    int length = presenter.getQuizLength();
+    message = "Congratulations! You got $score/$length questions correct.";
+    questionWidget = Scaffold(
+      appBar: AppBar(
+        title: const Text("Quiz"),
+        centerTitle: true,
+        backgroundColor: Colors.blueAccent.shade700,
+      ),
+
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            Text(
+              message,
+              style: const TextStyle(fontWeight: FontWeight.bold,
+                  fontSize: 50),
+            ),
+          ]
+        )
+      )
+    );
+  }
+
   @override
   void initState() {
     super.initState();
 
     // start the quiz
-    buildQuestionPage();
+    updateQuestionPage(presenter.getQuestion());
   }
 
   @override

@@ -17,7 +17,7 @@ class QuizPresenter {
   /// Quiz to be run. Use one of the quiz builder methods to create this.
   final _quiz = debugQuizBuilder();
 
-  /// Initialize a quiz and return the first question.
+  /// Initialize a quiz.
   ///
   /// Displaying questions and allowing input should be handled by the UI.
   void initQuiz() {
@@ -49,6 +49,10 @@ class QuizPresenter {
     return _quiz.questionIndex;
   }
 
+  /// Returns the current score on the quiz
+  int getScore() {
+    return _quiz.score;
+  }
   /// Check if the answer to q question is correct. Only call once per question.
   ///
   /// If [answer] is a correct answer, the score will increase by one and true will be returned.
