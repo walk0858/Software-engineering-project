@@ -165,7 +165,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   }
                   else {
                     try {
-                       await FirebaseAuth.instance.signInWithEmailAndPassword(
+                       await firebaseAuth.signInWithEmailAndPassword(
                           email: userNameController.text, password: passwordController.text);
                       success = true;
                     }

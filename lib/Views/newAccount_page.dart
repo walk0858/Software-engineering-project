@@ -1,9 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:fantastic_five_name_game/Utils/constants.dart';
+import 'package:fantastic_five_name_game/Views/add_new_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'hub_page.dart';
+
 
 
 
@@ -120,7 +122,7 @@ class createNewUserState extends State<createNewUser>{
 
                   if (password == password2) {
                     try {
-                      UserCredential userCredential = await FirebaseAuth.instance
+                      UserCredential userCredential = await firebaseAuth
                           .createUserWithEmailAndPassword(
                           email: email, password: password);
                       success = true;
@@ -141,7 +143,7 @@ class createNewUserState extends State<createNewUser>{
                   }
                   if(success){
                     Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
-                      return Hub();
+                      return addNewUser();
                     }));
                   }
                 },
