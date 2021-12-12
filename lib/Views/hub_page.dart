@@ -2,6 +2,7 @@ import 'package:fantastic_five_name_game/Utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'quiz_page.dart';
 
 class Hub extends StatefulWidget {
   @override
@@ -36,7 +37,12 @@ class _HubState extends State<Hub> {
 
                     child: ElevatedButton(
                       child: Text("Start Quiz"),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Quiz())
+                        );
+                      },
 
                     ),
                   ),
