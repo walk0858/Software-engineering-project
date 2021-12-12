@@ -1,22 +1,30 @@
 import '../Model/question.dart';
 import '../Model/quiz.dart';
 
-/// Creates a debug quiz. For testing purposes only.
-Quiz debugQuizBuilder() {
-  Question one = Question("Is this a test?",
-      ["Yes", "No", "What's a test?", "Who's a test?", "Hilarious joke goes here"],
-      "Yes");
-  Question two = Question("What is the airspeed velocity of an unladen swallow?",
-      ["c", "21 m/(mol*s)", "2fast", "x>0", "African or European?"],
-      "African or European?");
-  Quiz debugQuiz = Quiz([one, two]);
-  return debugQuiz;
-}
+
 
 class QuizPresenter {
   /// Quiz to be run. Use one of the quiz builder methods to create this.
-  final _quiz = debugQuizBuilder();
+  Quiz _quiz = Quiz([Question("null", ["null"], "null")]);
 
+  QuizPresenter(Quiz quizToPlay) {
+    _quiz = quizToPlay;
+  }
+
+  /// Creates a debug quiz. For testing purposes only.
+  /*NOTE: You can create a static method like this one to create
+  * a new quiz. The */
+  static QuizPresenter debugQuizBuilder() {
+    Question one = Question("Is this a test?",
+        ["Yes", "No", "What's a test?", "Who's a test?", "Hilarious joke goes here"],
+        "Yes");
+    Question two = Question("What is the airspeed velocity of an unladen swallow?",
+        ["c", "21 m/(mol*s)", "2fast", "x>0", "African or European?"],
+        "African or European?");
+    Quiz debugQuiz = Quiz([one, two]);
+
+    return QuizPresenter(debugQuiz);
+  }
   /// Initialize a quiz.
   ///
   /// Displaying questions and allowing input should be handled by the UI.

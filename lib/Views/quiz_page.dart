@@ -10,7 +10,7 @@ class Quiz extends StatefulWidget {
 
 class _QuizState extends State<Quiz> {
   // quiz presenter.
-  QuizPresenter presenter = QuizPresenter();
+  QuizPresenter presenter = QuizPresenter.debugQuizBuilder();
 
   // question page variable
   var questionWidget;
@@ -224,6 +224,7 @@ class _QuizState extends State<Quiz> {
   void initState() {
     super.initState();
 
+    presenter = QuizPresenter.debugQuizBuilder();
     // start the quiz
     updateQuestionPage(presenter.getQuestion());
   }
