@@ -1,4 +1,5 @@
 import 'package:fantastic_five_name_game/Utils/constants.dart';
+import 'package:fantastic_five_name_game/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -65,10 +66,18 @@ class _HubState extends State<Hub> {
   }
 
   Widget buildLogoutButton(){
-    return new TextButton(child: new Text(
+    return TextButton(
+      child: Text(
       signedIn ? 'Logout' : 'Guest',
-      style: TextStyle(color: Colors.white),),
-      onPressed: signedIn ? Logout : null,
+      style: const TextStyle(color: Colors.white),),
+      onPressed: () {
+        signedIn ? Logout : null;
+        Navigator.of(context).push(
+            MaterialPageRoute(builder:
+              (context)=>MyHomePage(title: 'Name Game Sign in page',
+              )
+            ));
+        }, // onPressed
     );
   }
 
