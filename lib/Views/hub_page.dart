@@ -74,8 +74,7 @@ class _HubState extends State<Hub> {
         signedIn ? Logout : null;
         Navigator.of(context).push(
             MaterialPageRoute(builder:
-              (context)=>MyHomePage(title: 'Name Game Sign in page',
-              )
+              (context)=>MyHomePage(title: 'Name Game Sign in page',)
             ));
         }, // onPressed
     );
