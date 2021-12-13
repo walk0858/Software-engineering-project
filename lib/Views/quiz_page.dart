@@ -198,6 +198,8 @@ class _QuizState extends State<Quiz> {
     // Set message to display the score out of 10.
     int score = presenter.getScore();
     int length = presenter.getQuizLength();
+    double percent = score/length;
+    double result = (score/length) * 100;
     message = "Congratulations! You got $score/$length questions correct.";
     questionWidget = Scaffold(
       appBar: AppBar(
@@ -208,11 +210,44 @@ class _QuizState extends State<Quiz> {
 
       body: Center(
         child: Column(
+
           children: <Widget>[
-            Text(
-              message,
-              style: const TextStyle(fontWeight: FontWeight.bold,
-                  fontSize: 50),
+            Padding(
+              padding: EdgeInsets.fromLTRB(8.0,20.0,8.0,80.0),
+                child: Text(
+                message,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontWeight: FontWeight.bold,
+                    fontSize: 50),
+             ),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(8.0,20.0,8.0,20.0),
+              child: Text(
+                result.toString() + " %",
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontWeight: FontWeight.bold,
+                    fontSize: 30),
+              ),
+            ),
+            CircularProgressIndicator(
+              value: percent,
+              semanticsLabel: 'Percentage',
+              strokeWidth: 7,
+              color: Colors.green,
+              backgroundColor: Colors.grey,
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(8.0,50.0,8.0,20.0),
+              child: ElevatedButton(
+                child: Text("Take the Quiz Again"),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Quiz())
+                  );
+                }, // onPressed
+              ),
             ),
           ]
         )
