@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fantastic_five_name_game/Utils/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
@@ -215,6 +217,12 @@ class _QuizState extends State<Quiz> {
     // Set message to display the score out of 10.
     int score = presenter.getScore();
     int length = presenter.getQuizLength();
+    //adds results to users data base
+    if(firebaseAuth.currentUser != null){
+      firestore.collection("users").doc(firebaseAuth.currentUser!.uid).update(
+          {"Answered" : FieldValue.increment(length),
+            "Correct": FieldValue.increment(score)});
+    }
     double percent = score/length;
     double result = (score/length) * 100;
     message = "Congratulations! You got $score/$length questions correct.";
