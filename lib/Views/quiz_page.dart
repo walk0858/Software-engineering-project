@@ -259,10 +259,33 @@ class _QuizState extends State<Quiz> {
               child: ElevatedButton(
                 child: Text("Take the Quiz Again"),
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Quiz())
+                  // reset quiz to the initial state.
+                  // NOTE: This implementation makes more sense with randomized
+                  // questions, as the questions will be rechosen each replay.
+                  presenter = QuizPresenter.debugQuizBuilder();
+                  presenter.initQuiz();
+                  // Initialize audio
+                  musicPlayer.open(
+                    Audio("assets/audio/Cyberpunk Moonlight Sonata v2.mp3"),
+                    autoStart: true,
+                    loopMode: LoopMode.single,
                   );
+                  endQuizSFX.open(
+                    Audio("assets/audio/24.mp3"),
+                    autoStart: false,
+                  );
+                  correctSFX.open(
+                    Audio("assets/audio/completetask_0.mp3"),
+                    autoStart: false,
+                  );
+                  wrongSFX.open(
+                    Audio("assets/audio/alarm.ogg"),
+                    autoStart: false,
+                  );
+
+                  presenter = QuizPresenter.debugQuizBuilder();
+                  // start the quiz
+                  updateQuestionPage(presenter.getQuestion());
                 }, // onPressed
               ),
             ),
