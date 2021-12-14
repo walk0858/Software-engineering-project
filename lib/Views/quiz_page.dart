@@ -211,6 +211,7 @@ class _QuizState extends State<Quiz> {
   void displayResults() {
     // stop music and play completion sound
     musicPlayer.stop();
+    endQuizSFX.play();
     // Set message to display the score out of 10.
     int score = presenter.getScore();
     int length = presenter.getQuizLength();
@@ -281,7 +282,7 @@ class _QuizState extends State<Quiz> {
       loopMode: LoopMode.single,
     );
     endQuizSFX.open(
-      Audio("assets/audio/24.wav"),
+      Audio("assets/audio/24.mp3"),
       autoStart: false,
     );
     correctSFX.open(
