@@ -27,18 +27,25 @@ class _QuizState extends State<Quiz> {
   void answerButtonCheck(String answer) async {
     bool isCorrect = presenter.checkQuestion(answer);
     if (isCorrect) {
+      correctSFX.play();
       setState(() {
+        // Play audio
         // display correct message text
         message = "Correct! +1 Points";
       });
     } else {
       String correct = presenter.getCorrectAnswer();
       // display incorrect message text and the correct answer
+      wrongSFX.play();
       setState(() {
-        message = "Incorrect. The answer was $correct";
+        // Play audio
+        // display incorrect message text with the correct answer
+        message = "Incorrect. The answer was \"$correct\"";
       });
     }
 
+    // decrease volume of music so you can hear the darn bell sound why is it so quiet
+    musicPlayer.setVolume(0.25);
     setState(() {
       updateMessage(message);
     });
@@ -46,6 +53,7 @@ class _QuizState extends State<Quiz> {
     // wait for 1 second to allow user to see if they got the question right
     Future.delayed(const Duration(seconds: 4), () {
       if (presenter.getQuizIndex() < presenter.getQuizLength()-1) {
+        musicPlayer.setVolume(1);
         presenter.nextQuestion();
         setState(() {
           updateQuestionPage(presenter.getQuestion());
@@ -280,7 +288,7 @@ class _QuizState extends State<Quiz> {
       Audio("assets/audio/completetask_0.mp3"),
       autoStart: false,
     );
-    endQuizSFX.open(
+    wrongSFX.open(
       Audio("assets/audio/alarm.ogg"),
       autoStart: false,
     );
@@ -288,6 +296,18 @@ class _QuizState extends State<Quiz> {
     presenter = QuizPresenter.debugQuizBuilder();
     // start the quiz
     updateQuestionPage(presenter.getQuestion());
+  }
+  // Call destructors on audio when exiting the quiz
+  @mustCallSuper
+  @protected
+  void dispose() {
+    super.dispose();
+    // assetsAudioPlayer.stop();
+    // this line might be redundant
+    musicPlayer.dispose();
+    wrongSFX.dispose();
+    correctSFX.dispose();
+    endQuizSFX.dispose();
   }
 
   @override
