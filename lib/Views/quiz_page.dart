@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:assets_audio_player/assets_audio_player.dart';
 
 import '../Presenters/quiz_presenter.dart';
 
@@ -11,6 +12,11 @@ class Quiz extends StatefulWidget {
 class _QuizState extends State<Quiz> {
   // quiz presenter.
   QuizPresenter presenter = QuizPresenter.debugQuizBuilder();
+  // audio players
+  final musicPlayer = AssetsAudioPlayer();
+  final endQuizSFX = AssetsAudioPlayer();
+  final correctSFX = AssetsAudioPlayer();
+  final wrongSFX = AssetsAudioPlayer();
 
   // question page variable
   var questionWidget;
@@ -195,6 +201,8 @@ class _QuizState extends State<Quiz> {
 
   /// Displays the results screen, and how many questions the user got right
   void displayResults() {
+    // stop music and play completion sound
+    musicPlayer.stop();
     // Set message to display the score out of 10.
     int score = presenter.getScore();
     int length = presenter.getQuizLength();
@@ -258,6 +266,24 @@ class _QuizState extends State<Quiz> {
   @override
   void initState() {
     super.initState();
+    // Initialize audio
+    musicPlayer.open(
+      Audio("assets/audio/Cyberpunk Moonlight Sonata v2.mp3"),
+      autoStart: true,
+      loopMode: LoopMode.single,
+    );
+    endQuizSFX.open(
+      Audio("assets/audio/24.wav"),
+      autoStart: false,
+    );
+    correctSFX.open(
+      Audio("assets/audio/completetask_0.mp3"),
+      autoStart: false,
+    );
+    endQuizSFX.open(
+      Audio("assets/audio/alarm.ogg"),
+      autoStart: false,
+    );
 
     presenter = QuizPresenter.debugQuizBuilder();
     // start the quiz
