@@ -11,7 +11,7 @@ class Quiz extends StatefulWidget {
 
 class _QuizState extends State<Quiz> {
   // quiz presenter.
-  QuizPresenter presenter = QuizPresenter.debugQuizBuilder();
+  QuizPresenter presenter = QuizPresenter.formOneBuilder();
   // audio players
   final musicPlayer = AssetsAudioPlayer();
   final endQuizSFX = AssetsAudioPlayer();
@@ -262,7 +262,7 @@ class _QuizState extends State<Quiz> {
                   // reset quiz to the initial state.
                   // NOTE: This implementation makes more sense with randomized
                   // questions, as the questions will be rechosen each replay.
-                  presenter = QuizPresenter.debugQuizBuilder();
+                  presenter = QuizPresenter.formOneBuilder();
                   presenter.initQuiz();
                   // Initialize audio
                   musicPlayer.open(
@@ -283,7 +283,6 @@ class _QuizState extends State<Quiz> {
                     autoStart: false,
                   );
 
-                  presenter = QuizPresenter.debugQuizBuilder();
                   // start the quiz
                   updateQuestionPage(presenter.getQuestion());
                 }, // onPressed
@@ -317,7 +316,7 @@ class _QuizState extends State<Quiz> {
       autoStart: false,
     );
 
-    presenter = QuizPresenter.debugQuizBuilder();
+    presenter = QuizPresenter.formOneBuilder();
     // start the quiz
     updateQuestionPage(presenter.getQuestion());
   }
